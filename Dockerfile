@@ -1,14 +1,16 @@
-FROM node:8.11-alpine
+FROM node:14.17.0-alpine
 
-WORKDIR /usr/src/app
+RUN mkdir -p /home/test-app
+WORKDIR /home/test-app
 
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
+ENV PATH /home/test-app/node_modules/.bin:$PATH
 
-COPY package*.json /usr/src/app/
+COPY package*.json /home/test-app
 RUN npm install
 
-COPY . /usr/src/app
+COPY . .
 
 ENV PORT 5000
 EXPOSE $PORT
